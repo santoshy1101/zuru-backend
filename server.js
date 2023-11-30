@@ -1,8 +1,12 @@
 const express = require("express");
 const { connectToDb } = require("./db");
+const cors = require("cors"); 
 const projectRoutes = require("./project.routes");
 
 const app = express();
+
+app.use(cors());
+
 app.use(express.json());
 
 app.use("/project", projectRoutes);
