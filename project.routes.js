@@ -112,15 +112,12 @@ router.delete("/:projectId/links/:linkId", async (req, res) => {
     if (!project) {
       return res.status(404).send();
     }
-
-    const link = project.links.id(req.params.linkId);
-    if (!link) {
-      return res.status(404).send();
-    }
-
-    link.remove();
+    const newLinks = project.links.filter(
+      (l) => l._id.toString() !== req.params.linkId
+    );
+    project.links = newLinks;
     await project.save();
-    res.send(link);
+    res.send("Deleted Successfully!");
   } catch (error) {
     res.status(500).send(error);
   }
