@@ -6,6 +6,9 @@ const app = express();
 app.use(express.json());
 
 app.use("/project", projectRoutes);
+app.use("/", (req,res)=>{
+res.send("App is Running")
+});
 
 // Start the server
 const PORT = process.env.PORT || 3000;
