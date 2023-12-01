@@ -68,6 +68,26 @@ router.delete("/:id", async (req, res) => {
 
 // CRUD operations for links within a project
 
+// Read a specific link within a project by link ID
+router.get("/:projectId/links/:linkId", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.projectId);
+    if (!project) {
+      return res.status(404).send();
+    }
+
+    const link = project.links.id(req.params.linkId);
+    if (!link) {
+      return res.status(404).send();
+    }
+
+    res.send(link);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+
 // Create a new link within a project
 router.post("/:projectId/links", async (req, res) => {
   try {
